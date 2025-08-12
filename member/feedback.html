@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/media/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/script.js"></script>
+    <title>Colombo Independent Debaters' Society</title>
+</head>
+
+<body>
+    <script>
+        createNavBar();
+    </script>
+    <style>
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .body-main h2 {
+            margin-top: 0px;
+            margin-bottom: 5px;
+            width: 100%;
+        }
+
+        .body-main p {
+            margin-bottom: 20px;
+            color: #565656;
+            font-size: small;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                display: block;
+                padding: 20px;
+            }
+        }
+    </style>
+    <div class="blurMain" id="blurMain">
+        <div class="body-main" id="bodyMain">
+
+            <div class="dashboard" id="webBody">
+                <h2>Share and Receive Feedback</h2>
+                <p>This page allows you to provide other members with constructive feedback to help them do better in
+                    their roles. Adjudicators are encouraged to share a summary of their feedback for practice debates.
+                    Please be respectful and disciplinary actions will be taken against harrassment or sharing
+                    irrelevant messages.</p>
+                <div class="feedback-received">
+                    <ul>
+                        <li></li>
+                    </ul>
+                </div>
+                <div class="send-feedback">
+                    <form id="feedbackSender" onsubmit="submitFeedback()">
+                        <label for="feedbackTo">To:&nbsp;</label>
+                        <select name="feedbackTo" id="feedbackTo">
+                            <option value="001">Riveen</option>
+                            <option value="002">Africa</option>
+                        </select> <br>
+                        <textarea name="feedback" id="feedbackEntry" rows="28" style="resize: none;" required
+                            placeholder="Start typing your feedback..."></textarea><br>
+
+                        <hr>
+                        <button form="feedbackSender" type="submit">Send Feedback <i
+                                class="fa-regular fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        createFooter();
+
+        // function to submit the feedback
+        function submitFeedback() {
+            supabaseClient.auth.getSession().then(({ data: { session } }) => {
+                if (!session) {
+                    window.location.href = "/login.html";
+                } else {
+                    const sender = session.user.id;
+                    const receiver = document.getElementById("feedbackTo").value;
+                    const feedback = document.getElementById("feedbackEntry").value;
+                    console.log(`${sender} sent this feedback to ${receiver}: ${feedback}`);
+                }
+            });
+        }
+
+
+        // redirect to login if there is no active session
+        supabaseClient.auth.getSession().then(({ data: { session } }) => {
+            if (!session) {
+                window.location.href = "/login.html";
+            } else {
+                console.log(`You're Logged In ${session.user.id}`);
+            }
+        });
+    </script>
+</body>
+
+</html>

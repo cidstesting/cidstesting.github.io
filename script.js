@@ -41,7 +41,7 @@ function createNavBar() {
       </div>
         <div class="menu-toggle" onclick="toggleMenu()"><i class="fa">&#9776;</i></div>
         <ul class="nav-links-desktop">
-          ${navList.map(([label, link]) => `<li id = "${label}"><a href="${link}">${label}</a></li>`).join("")}
+          ${navList.map(([label, link]) => `<li id = "${label.split(' ').join('_')}"><a href="${link}">${label}</a></li>`).join("")}
         </ul>
       </div>
       <ul class="nav-links-mobile">
@@ -151,7 +151,7 @@ async function login() {
     msg.style.color = "red";
   } else {
     msg.textContent = "Login successful!";
-    msg.style.color = "lime";
+    msg.style.color = "#008080";
     window.location.href = "/members-portal.html";
   }
 }

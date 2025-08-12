@@ -23,7 +23,7 @@
     </div>
     <script>
         createFooter();
-
+        
         // redirect to login if there is no active session
             supabaseClient.auth.getSession().then(({ data: { session } }) => {
                 if (!session) {

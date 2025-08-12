@@ -59,7 +59,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       createFooter();
 
-      // redirect to login if the user is not logged in
+      // redirect to members portal if the user is logged in
       supabaseClient.auth.getSession().then(({ data: { session } }) => {
         if (session) window.location.href = "/members-portal.html";
       });

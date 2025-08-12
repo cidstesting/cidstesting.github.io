@@ -25,23 +25,29 @@
             </div>
             <div class="dashboard-items">
                 <div class="buttons-holder">
-                    <a href="/member/my-id.html">
+                    <a href="/member/my-id.html" id="aButton">
                         <button class="dashboard-btn">
                             <i class="fa-solid fa-id-badge"></i>
                         </button>
                         <p>My ID</p>
                     </a>
-                    <a href="/member/feedback-received.html">
+                    <a href="/member/feedback.html">
                         <button class="dashboard-btn">
                             <i class="fa-solid fa-comments"></i>
                         </button>
                         <p>Feedback</p>
                     </a>
-                    <a href="/member/my-attendance.html">
+                    <a href="/member/attendance.html">
                         <button class="dashboard-btn">
                             <i class="fa-solid fa-square-poll-horizontal"></i>
                         </button>
                         <p>My Attendance</p>
+                    </a>
+                    <a href="/member/join-meeting.html">
+                        <button class="dashboard-btn">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                        <p>Join Zoom</p>
                     </a>
                     <a href="/member/the-test.html">
                         <button class="dashboard-btn">
@@ -49,17 +55,17 @@
                         </button>
                         <p>The Test</p>
                     </a>
+                    <a href="/member/timer.html">
+                        <button class="dashboard-btn">
+                            <i class="fa-regular fa-clock"></i>
+                        </button>
+                        <p>Timer</p>
+                    </a>
                     <a href="/admin/attendance-register.html">
                         <button class="dashboard-btn">
                             <i class="fa-solid fa-clipboard"></i>
                         </button>
                         <p>Record Attendance</p>
-                    </a>
-                    <a href="/admin/send-feedback.html">
-                        <button class="dashboard-btn">
-                            <i class="fa-solid fa-comment"></i>
-                        </button>
-                        <p>Set Feedback</p>
                     </a>
                     <a href="/admin/member-records.html">
                         <button class="dashboard-btn">
@@ -68,7 +74,30 @@
                         <p>Members</p>
                     </a>
                 </div>
+                <!-- The events here are loaded from the database -->
                 <div class="calendar-holder">
+                    <div class="eventRow">
+                        <div class="date-box">
+                            <div class="day">SAT</div>
+                            <div class="number">29</div>
+                            <div class="month">JUN</div>
+                        </div>
+                        <div class="eventDetails">
+                            <div class="eventName">Concert Night</div>
+                            <div class="eventDescription">Live at the amphitheater at 8 PM.</div>
+                        </div>
+                    </div>
+                    <div class="eventRow">
+                        <div class="date-box">
+                            <div class="day">SAT</div>
+                            <div class="number">29</div>
+                            <div class="month">JUN</div>
+                        </div>
+                        <div class="eventDetails">
+                            <div class="eventName">Concert Night</div>
+                            <div class="eventDescription">Live at the amphitheater at 8 PM.</div>
+                        </div>
+                    </div>
                     <div class="eventRow">
                         <div class="date-box">
                             <div class="day">SAT</div>
@@ -99,6 +128,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             createFooter();
 
+            // redirect to login if there is no active session
             supabaseClient.auth.getSession().then(({ data: { session } }) => {
                 if (!session) {
                     window.location.href = "/login.html";
@@ -107,14 +137,20 @@
                 }
             });
 
+            // logout if the user clicks the "logout" button
             document.getElementById("logoutBtn").addEventListener("click", logout);
 
+            // make the buttons square
             const buttons = document.getElementsByClassName("dashboard-btn");
-
             Array.from(buttons).forEach((btn) => {
                 btn.style.height = btn.clientWidth + "px"; // make it square
                 btn.style.fontSize = (btn.clientWidth * 0.4) + "px"; // set font size
             });
+
+            // make the calendar max-height into twice the height of a button
+            const eventsHolder = document.querySelector(".calendar-holder");
+            const button = document.getElementById("aButton");
+            eventsHolder.style.maxHeight = (button.clientHeight * 3) + "px";
 
             textWrap(".eventDetails p", 2);
         });
