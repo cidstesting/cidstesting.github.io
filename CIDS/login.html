@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/media/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/script.js"></script>
+  <title>Colombo Independent Debaters' Society</title>
+</head>
+
+<body>
+  <script>
+    createNavBar(); // This must be defined in your external script
+  </script>
+
+  <style>
+    .memberReg input {
+      margin-bottom: 20px;
+    }
+
+    .formButtons {
+      margin-top: 30px;
+    }
+
+    .memberReg {
+      margin-top: 0px;
+    }
+  </style>
+  <div class="blurMain" id="blurMain">
+    <div class="body-main" id="bodyMain">
+      <div class="web-body" id="webBody">
+        <div class="memberReg" id="memberReg">
+          <h2 style="margin-bottom: 30px;">Login to CIDS</h2>
+
+          <label for="email">Your Email</label><br>
+          <input type="email" id="email" class="login-input" required placeholder="johnny.doe@example.com"><br>
+
+          <label for="password">Password</label><br>
+          <input type="password" id="password" class="login-input" required placeholder="••••••••"><br>
+
+          <input type="checkbox" id="showPassword">
+          <label for="showPassword">Show Password</label><br>
+
+          <div class="formButtons">
+            <button type="button" class="formAction" onclick="login()">Login</button>
+            <button type="reset" id="reset" class="formAction resetAction">Forgot Password</button>
+          </div>
+
+          <p id="message"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      createFooter();
+
+      // redirect to members portal if the user is logged in
+      supabaseClient.auth.getSession().then(({ data: { session } }) => {
+        if (session) window.location.href = "/members-portal.html";
+      });
+
+      // the function to show and hide the password by checkbox
+      document.getElementById("showPassword").addEventListener("change", function () {
+        const passwordField = document.getElementById("password");
+        passwordField.type = this.checked ? "text" : "password";
+      });
+
+    })
+  </script>
+</body>
+
+</html>

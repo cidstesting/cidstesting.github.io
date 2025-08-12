@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="h-full bg-gray-50" lang="en">
+
+<head h-full bg-gray-50>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/media/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/script.js"></script>
+    <title>Colombo Independent Debaters' Society</title>
+</head>
+
+<body></body>
+<script>
+    createNavBar();
+</script>
+
+<div class="blurMain" id="blurMain">
+    <div class="body-main" id="bodyMain">
+        <div class="dashboard" id="webBody">
+            <div class="members-top-bar">
+                <p class="greeting" id="greeting">Hello user!</p>
+                <button id="logoutBtn">Logout</button>
+            </div>
+            <div class="dashboard-items">
+                <div class="buttons-holder">
+                    <a href="/member/my-id.html" id="aButton">
+                        <button class="dashboard-btn">
+                            <i class="fa-solid fa-id-badge"></i>
+                        </button>
+                        <p>My ID</p>
+                    </a>
+                    <a href="/member/feedback.html">
+                        <button class="dashboard-btn">
+                            <i class="fa-solid fa-comments"></i>
+                        </button>
+                        <p>Feedback</p>
+                    </a>
+                    <a href="/member/attendance.html">
+                        <button class="dashboard-btn">
+                            <i class="fa-solid fa-square-poll-horizontal"></i>
+                        </button>
+                        <p>My Attendance</p>
+                    </a>
+                    <a href="/member/join-meeting.html">
+                        <button class="dashboard-btn">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                        <p>Join Zoom</p>
+                    </a>
+                    <a href="/member/the-test.html">
+                        <button class="dashboard-btn">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <p>The Test</p>
+                    </a>
+                    <a href="/member/timer.html">
+                        <button class="dashboard-btn">
+                            <i class="fa-regular fa-clock"></i>
+                        </button>
+                        <p>Timer</p>
+                    </a>
+                    <a href="/admin/attendance-register.html">
+                        <button class="dashboard-btn">
+                            <i class="fa-solid fa-clipboard"></i>
+                        </button>
+                        <p>Record Attendance</p>
+                    </a>
+                    <a href="/admin/member-records.html">
+                        <button class="dashboard-btn">
+                            <i class="fa-solid fa-people-group"></i>
+                        </button>
+                        <p>Members</p>
+                    </a>
+                </div>
+                <!-- The events here are loaded from the database -->
+                <div class="calendar-holder">
+                    <div class="eventRow">
+                        <div class="date-box">
+                            <div class="day">SAT</div>
+                            <div class="number">29</div>
+                            <div class="month">JUN</div>
+                        </div>
+                        <div class="eventDetails">
+                            <div class="eventName">Concert Night</div>
+                            <div class="eventDescription">Live at the amphitheater at 8 PM.</div>
+                        </div>
+                    </div>
+                    <div class="eventRow">
+                        <div class="date-box">
+                            <div class="day">SAT</div>
+                            <div class="number">29</div>
+                            <div class="month">JUN</div>
+                        </div>
+                        <div class="eventDetails">
+                            <div class="eventName">Concert Night</div>
+                            <div class="eventDescription">Live at the amphitheater at 8 PM.</div>
+                        </div>
+                    </div>
+                    <div class="eventRow">
+                        <div class="date-box">
+                            <div class="day">SAT</div>
+                            <div class="number">29</div>
+                            <div class="month">JUN</div>
+                        </div>
+                        <div class="eventDetails">
+                            <div class="eventName">Concert Night</div>
+                            <div class="eventDescription">Live at the amphitheater at 8 PM.</div>
+                        </div>
+                    </div>
+                    <div class="eventRow">
+                        <div class="date-box">
+                            <div class="day">SAT</div>
+                            <div class="number">29</div>
+                            <div class="month">JUN</div>
+                        </div>
+                        <div class="eventDetails">
+                            <div class="eventName">Concert Night</div>
+                            <div class="eventDescription">Live at the amphitheater at 8 PM.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            createFooter();
+
+            // redirect to login if there is no active session
+            supabaseClient.auth.getSession().then(({ data: { session } }) => {
+                if (!session) {
+                    window.location.href = "/login.html";
+                } else {
+                    document.getElementById('greeting').textContent = `Welcome, ${session.user.email.substring(0, 14) + "..."}`;
+                }
+            });
+
+            // logout if the user clicks the "logout" button
+            document.getElementById("logoutBtn").addEventListener("click", logout);
+
+            // make the buttons square
+            const buttons = document.getElementsByClassName("dashboard-btn");
+            Array.from(buttons).forEach((btn) => {
+                btn.style.height = btn.clientWidth + "px"; // make it square
+                btn.style.fontSize = (btn.clientWidth * 0.4) + "px"; // set font size
+            });
+
+            // make the calendar max-height into twice the height of a button
+            const eventsHolder = document.querySelector(".calendar-holder");
+            const button = document.getElementById("aButton");
+            eventsHolder.style.maxHeight = (button.clientHeight * 3) + "px";
+
+            textWrap(".eventDetails p", 2);
+        });
+    </script>
+    </body>
+
+</html>
